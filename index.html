@@ -7,23 +7,20 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
     
     <style>
-        /* ========== RESET ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* ========== BODY ========== */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #0a0a0f 0%, #13131a 50%, #1a1a2e 100%);
             min-height: 100vh;
             color: #ffffff;
             line-height: 1.6;
         }
 
-        /* ========== CONTAINER ========== */
         .container {
             max-width: 850px;
             margin: 0 auto;
@@ -33,7 +30,6 @@
             flex-direction: column;
         }
 
-        /* ========== HEADER ========== */
         header {
             text-align: center;
             padding: 40px 0 30px;
@@ -93,27 +89,10 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #fbbf24;
-            animation: pulse 2s infinite;
-        }
-
-        .status-dot.online {
             background: #22c55e;
-            animation: none;
             box-shadow: 0 0 10px #22c55e;
         }
 
-        .status-dot.offline {
-            background: #ef4444;
-            animation: none;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.9); }
-        }
-
-        /* ========== CHAT CONTAINER ========== */
         .chat-container {
             flex: 1;
             display: flex;
@@ -123,10 +102,8 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             overflow: hidden;
             margin: 20px 0;
-            backdrop-filter: blur(10px);
         }
 
-        /* ========== MESSAGES ========== */
         .messages {
             flex: 1;
             overflow-y: auto;
@@ -145,14 +122,8 @@
         }
 
         @keyframes slideIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(15px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.user {
@@ -200,7 +171,6 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        /* ========== TYPING INDICATOR ========== */
         .typing-indicator {
             display: flex;
             align-items: center;
@@ -225,7 +195,6 @@
             30% { transform: translateY(-12px); }
         }
 
-        /* ========== QUICK PROMPTS ========== */
         .quick-prompts {
             display: flex;
             flex-wrap: wrap;
@@ -255,7 +224,6 @@
             box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
         }
 
-        /* ========== INPUT AREA ========== */
         .input-area {
             padding: 20px 24px;
             background: rgba(0, 0, 0, 0.3);
@@ -317,7 +285,6 @@
             transform: none;
         }
 
-        /* ========== FOOTER ========== */
         footer {
             text-align: center;
             padding: 25px;
@@ -335,198 +302,95 @@
             color: #a855f7;
         }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
-            .container {
-                padding: 12px;
-            }
-
-            h1 {
-                font-size: 2rem;
-                letter-spacing: 1px;
-            }
-
-            .logo {
-                font-size: 3.5rem;
-            }
-
-            .messages {
-                max-height: 45vh;
-                padding: 16px;
-            }
-
-            .bubble {
-                max-width: 85%;
-                padding: 12px 16px;
-                font-size: 0.9rem;
-            }
-
-            .quick-btn {
-                padding: 10px 16px;
-                font-size: 0.85rem;
-            }
-
-            .send-btn {
-                padding: 12px 20px;
-            }
+            .container { padding: 12px; }
+            h1 { font-size: 2rem; letter-spacing: 1px; }
+            .logo { font-size: 3.5rem; }
+            .messages { max-height: 45vh; padding: 16px; }
+            .bubble { max-width: 85%; padding: 12px 16px; font-size: 0.9rem; }
+            .quick-btn { padding: 10px 16px; font-size: 0.85rem; }
+            .send-btn { padding: 12px 20px; }
         }
 
-        /* ========== SCROLLBAR ========== */
-        .messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .messages::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+        .messages::-webkit-scrollbar { width: 6px; }
+        .messages::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+        .messages::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <header>
             <div class="logo">🧠</div>
             <h1>NEURAFORM</h1>
             <p class="tagline">AI Language Model • Built from Scratch with PyTorch</p>
-            <div class="badge">✨ Real Neural Network - Not Rule-Based!</div>
+            <div class="badge">✨ Real Neural Network</div>
             <div class="status-bar">
                 <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">Connecting to AI...</span>
+                <span id="statusText">AI Online</span>
             </div>
         </header>
 
-        <!-- CHAT -->
         <div class="chat-container">
             <div class="messages" id="messages">
-                <!-- Welcome Message -->
                 <div class="message bot">
                     <div class="avatar">🧠</div>
                     <div class="bubble">
                         <strong>Hello! I'm Neuraform</strong> 👋<br><br>
-                        I'm a real language model built from scratch using PyTorch. I have actual neural network layers with attention mechanisms - I'm NOT a rule-based chatbot!<br><br>
-                        Ask me about science, technology, history, philosophy, or anything else. Let's explore knowledge together! 🚀
+                        I'm a real language model built from scratch using PyTorch. I'm NOT a rule-based chatbot!<br><br>
+                        Give me a prompt like <strong>"Physics is"</strong> or <strong>"The universe"</strong> and I'll complete it! 🚀
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Prompts -->
             <div class="quick-prompts">
-                <button class="quick-btn" onclick="askQuestion('Explain quantum physics')">🔬 Quantum Physics</button>
-                <button class="quick-btn" onclick="askQuestion('Tell me about black holes')">🕳️ Black Holes</button>
-                <button class="quick-btn" onclick="askQuestion('How does artificial intelligence work')">🤖 How AI Works</button>
-                <button class="quick-btn" onclick="askQuestion('Explain evolution and natural selection')">🧬 Evolution</button>
-                <button class="quick-btn" onclick="askQuestion('What is the Big Bang theory')">💥 Big Bang</button>
-                <button class="quick-btn" onclick="askQuestion('How does the brain work')">🧠 The Brain</button>
+                <button class="quick-btn" onclick="askQuestion('Physics is')">🔬 Physics is</button>
+                <button class="quick-btn" onclick="askQuestion('The universe')">🌌 The universe</button>
+                <button class="quick-btn" onclick="askQuestion('Artificial intelligence')">🤖 AI</button>
+                <button class="quick-btn" onclick="askQuestion('Evolution')">🧬 Evolution</button>
+                <button class="quick-btn" onclick="askQuestion('The brain')">🧠 The brain</button>
+                <button class="quick-btn" onclick="askQuestion('Black holes are')">🕳️ Black holes</button>
             </div>
 
-            <!-- Input Area -->
             <div class="input-area">
                 <div class="input-wrapper">
                     <input 
                         type="text" 
                         id="userInput" 
-                        placeholder="Ask Neuraform anything..."
+                        placeholder="Enter a prompt like 'Physics is' or 'The universe'..."
                         onkeypress="handleKeyPress(event)"
                         autocomplete="off"
                     >
                     <button class="send-btn" id="sendButton" onclick="sendMessage()">
-                        Send <span>🚀</span>
+                        Send 🚀
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- FOOTER -->
         <footer>
             Powered by <strong>Neuraform LLM</strong> • 
-            Built with PyTorch • 
-            <a href="https://huggingface.co" target="_blank">Hugging Face</a> •
-            <a href="https://github.com" target="_blank">GitHub</a>
+            Built with PyTorch •
+            <a href="https://huggingface.co/spaces/Magical-plus/neuraform" target="_blank">Hugging Face</a>
         </footer>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        // ╔════════════════════════════════════════════════════════════════╗
-        // ║                                                                ║
-        // ║   🔧 CONFIGURATION - YOU MUST UPDATE THIS!                     ║
-        // ║                                                                ║
-        // ╚════════════════════════════════════════════════════════════════╝
+        // ════════════════════════════════════════════════════════════
+        // YOUR HUGGING FACE URL - ALREADY CONFIGURED! ✅
+        // ════════════════════════════════════════════════════════════
         
-        // Replace with YOUR Hugging Face Space URL
-        // After creating your Space, your URL will be like:
-        // https://YOUR-USERNAME-neuraform.hf.space
+        const HUGGINGFACE_SPACE_URL = 'https://magical-plus-neuraform.hf.space';
         
-        const HUGGINGFACE_SPACE_URL = 'YOUR_HUGGINGFACE_URL_HERE';
-        
-        // Example (replace with your actual URL):
-        // const HUGGINGFACE_SPACE_URL = 'https://johndoe-neuraform.hf.space';
-        
-        // ══════════════════════════════════════════════════════════════════
+        // ════════════════════════════════════════════════════════════
 
-
-        // DOM Elements
         const messagesContainer = document.getElementById('messages');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
         const statusDot = document.getElementById('statusDot');
         const statusText = document.getElementById('statusText');
 
-        // State
         let isGenerating = false;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            checkConnection();
-            userInput.focus();
-            
-            // Check if URL is configured
-            if (HUGGINGFACE_SPACE_URL === 'YOUR_HUGGINGFACE_URL_HERE') {
-                showSetupMessage();
-            }
-        });
-
-        // Check API Connection
-        async function checkConnection() {
-            try {
-                statusDot.className = 'status-dot';
-                statusText.textContent = 'Connecting...';
-                
-                // Simple check - if URL is configured
-                if (HUGGINGFACE_SPACE_URL !== 'YOUR_HUGGINGFACE_URL_HERE') {
-                    statusDot.className = 'status-dot online';
-                    statusText.textContent = 'AI Online';
-                }
-            } catch (error) {
-                statusDot.className = 'status-dot offline';
-                statusText.textContent = 'Connection Error';
-            }
-        }
-
-        // Show setup message if URL not configured
-        function showSetupMessage() {
-            addMessage(`
-                <strong>⚠️ Setup Required!</strong><br><br>
-                To connect me to the AI backend, you need to:<br><br>
-                <strong>1.</strong> Create a Hugging Face Space (free)<br>
-                <strong>2.</strong> Copy your Space URL<br>
-                <strong>3.</strong> Edit this file and update <code>HUGGINGFACE_SPACE_URL</code><br>
-                <strong>4.</strong> Redeploy to Vercel<br><br>
-                <em>See the setup guide for detailed instructions!</em>
-            `, false);
-            
-            statusDot.className = 'status-dot offline';
-            statusText.textContent = 'Setup Needed';
-        }
 
         // Add message to chat
         function addMessage(content, isUser = false) {
@@ -559,7 +423,7 @@
                         <span></span>
                     </div>
                     <small style="color: #888; display: block; margin-top: 8px;">
-                        Neural network generating response...
+                        Generating response...
                     </small>
                 </div>
             `;
@@ -582,16 +446,11 @@
             }
         }
 
-        // Send message
+        // Send message to AI
         async function sendMessage() {
             const message = userInput.value.trim();
             
             if (!message || isGenerating) return;
-            
-            if (HUGGINGFACE_SPACE_URL === 'YOUR_HUGGINGFACE_URL_HERE') {
-                addMessage('Please configure the Hugging Face URL first! Check the setup instructions.', false);
-                return;
-            }
             
             // Update UI
             isGenerating = true;
@@ -604,8 +463,12 @@
             // Show typing
             showTyping();
             
+            // Update status
+            statusDot.style.background = '#fbbf24';
+            statusText.textContent = 'Generating...';
+            
             try {
-                // Call Hugging Face Gradio API
+                // Call Hugging Face API
                 const response = await fetch(`${HUGGINGFACE_SPACE_URL}/api/predict`, {
                     method: 'POST',
                     headers: {
@@ -614,7 +477,6 @@
                     body: JSON.stringify({
                         data: [
                             message,  // User message
-                            [],       // Chat history
                             0.8,      // Temperature
                             150       // Max length
                         ]
@@ -627,40 +489,33 @@
                     throw new Error(`Server error: ${response.status}`);
                 }
                 
-                const data = await response.json();
+                const result = await response.json();
                 
-                // Parse Gradio response
-                if (data.data && data.data.length >= 2) {
-                    const chatHistory = data.data[1];
-                    
-                    if (chatHistory && chatHistory.length > 0) {
-                        const lastEntry = chatHistory[chatHistory.length - 1];
-                        
-                        if (lastEntry && lastEntry[1]) {
-                            addMessage(lastEntry[1], false);
-                        } else {
-                            addMessage("I processed your request but got an empty response. Try again!", false);
-                        }
-                    } else {
-                        addMessage("Response received but couldn't parse it. The model might need a moment.", false);
-                    }
+                // Get the response text
+                if (result.data && result.data[0]) {
+                    addMessage(result.data[0], false);
                 } else {
-                    throw new Error('Unexpected response format');
+                    addMessage("I received your message but couldn't generate a response. Try again!", false);
                 }
+                
+                // Update status
+                statusDot.style.background = '#22c55e';
+                statusText.textContent = 'AI Online';
                 
             } catch (error) {
                 console.error('Error:', error);
                 removeTyping();
                 
-                addMessage(`
-                    <strong>⚠️ Connection Issue</strong><br><br>
-                    Could not reach the AI backend. This might be because:<br><br>
-                    • The Hugging Face Space is still starting up (wait 1-2 min)<br>
-                    • The Space went to sleep (visit it directly to wake it)<br>
-                    • Network connectivity issue<br><br>
-                    <strong>Try:</strong> Wait a moment and send your message again.<br><br>
-                    <small>Error: ${error.message}</small>
-                `, false);
+                addMessage(`⚠️ <strong>Connection Issue</strong><br><br>
+                    The AI might be waking up (Hugging Face free tier sleeps after inactivity).<br><br>
+                    <strong>Try:</strong> Wait 30 seconds and send again, or visit the 
+                    <a href="${HUGGINGFACE_SPACE_URL}" target="_blank" style="color: #6366f1;">Hugging Face Space</a> 
+                    directly to wake it up.<br><br>
+                    <small>Error: ${error.message}</small>`, false);
+                
+                // Update status
+                statusDot.style.background = '#ef4444';
+                statusText.textContent = 'Connection Error';
             }
             
             // Reset UI
@@ -674,6 +529,9 @@
             userInput.value = question;
             sendMessage();
         }
+
+        // Focus input on load
+        userInput.focus();
     </script>
 </body>
-  </html>
+</html>
