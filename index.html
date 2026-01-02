@@ -7,12 +7,14 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- GRADIO CLIENT -->
+    <script type="module">
+        import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+        window.GradioClient = Client;
+    </script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-primary: #212121;
@@ -25,8 +27,6 @@
             --border-color: #3a3a3a;
             --accent: #10a37f;
             --accent-hover: #0d8a6c;
-            --user-bubble: #2f2f2f;
-            --bot-bubble: transparent;
         }
 
         body {
@@ -37,7 +37,7 @@
             display: flex;
         }
 
-        /* ========== SIDEBAR ========== */
+        /* Sidebar */
         .sidebar {
             width: 260px;
             background: var(--bg-secondary);
@@ -62,22 +62,16 @@
             margin-bottom: 15px;
         }
 
-        .new-chat-btn:hover {
-            background: var(--bg-hover);
-        }
+        .new-chat-btn:hover { background: var(--bg-hover); }
 
         .sidebar-title {
             font-size: 12px;
             color: var(--text-muted);
             padding: 10px 14px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .chat-history {
-            flex: 1;
-            overflow-y: auto;
-        }
+        .chat-history { flex: 1; overflow-y: auto; }
 
         .chat-item {
             padding: 12px 14px;
@@ -85,16 +79,12 @@
             font-size: 14px;
             color: var(--text-secondary);
             cursor: pointer;
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: background 0.2s;
+            white-space: nowrap;
         }
 
-        .chat-item:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
+        .chat-item:hover { background: var(--bg-hover); color: var(--text-primary); }
 
         .sidebar-footer {
             border-top: 1px solid var(--border-color);
@@ -108,12 +98,6 @@
             gap: 12px;
             padding: 12px 14px;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .user-info:hover {
-            background: var(--bg-hover);
         }
 
         .user-avatar {
@@ -124,15 +108,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
         }
 
-        .user-name {
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        /* ========== MAIN CONTENT ========== */
+        /* Main */
         .main-content {
             flex: 1;
             display: flex;
@@ -140,32 +118,19 @@
             max-height: 100vh;
         }
 
-        /* ========== HEADER ========== */
         .header {
             padding: 12px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: space-between;
         }
 
-        .model-selector {
+        .model-name {
+            font-size: 16px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .model-selector:hover {
-            background: var(--bg-hover);
         }
 
         .model-badge {
@@ -174,10 +139,25 @@
             padding: 2px 8px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 600;
         }
 
-        /* ========== CHAT AREA ========== */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .status-dot.online { background: #22c55e; }
+        .status-dot.offline { background: #ef4444; }
+        .status-dot.connecting { background: #fbbf24; animation: blink 1s infinite; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Area */
         .chat-area {
             flex: 1;
             overflow-y: auto;
@@ -197,26 +177,16 @@
         .welcome-logo {
             font-size: 4rem;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        .welcome-title {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .welcome-subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-            max-width: 500px;
-            line-height: 1.6;
-        }
+        .welcome-title { font-size: 28px; font-weight: 600; margin-bottom: 10px; }
+        .welcome-subtitle { color: var(--text-secondary); max-width: 500px; }
 
         .suggestions {
             display: grid;
@@ -224,7 +194,6 @@
             gap: 12px;
             margin-top: 40px;
             max-width: 600px;
-            width: 100%;
         }
 
         .suggestion {
@@ -237,23 +206,11 @@
             transition: all 0.2s;
         }
 
-        .suggestion:hover {
-            background: var(--bg-hover);
-            border-color: var(--text-muted);
-        }
+        .suggestion:hover { background: var(--bg-hover); border-color: var(--text-muted); }
+        .suggestion-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .suggestion-desc { font-size: 13px; color: var(--text-muted); }
 
-        .suggestion-title {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .suggestion-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* ========== MESSAGES ========== */
+        /* Messages */
         .messages-container {
             max-width: 800px;
             margin: 0 auto;
@@ -268,9 +225,7 @@
             animation: fadeIn 0.3s ease;
         }
 
-        .message:last-child {
-            border-bottom: none;
-        }
+        .message:last-child { border-bottom: none; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -288,27 +243,10 @@
             flex-shrink: 0;
         }
 
-        .message.user .message-avatar {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        }
+        .message.user .message-avatar { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .message.bot .message-avatar { background: var(--accent); }
 
-        .message.bot .message-avatar {
-            background: var(--accent);
-        }
-
-        .message-content {
-            flex: 1;
-            line-height: 1.7;
-            font-size: 15px;
-        }
-
-        .message-content p {
-            margin-bottom: 12px;
-        }
-
-        .message-content p:last-child {
-            margin-bottom: 0;
-        }
+        .message-content { flex: 1; line-height: 1.7; font-size: 15px; }
 
         .typing-indicator {
             display: flex;
@@ -328,20 +266,17 @@
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-            30% { transform: translateY(-8px); opacity: 1; }
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
         }
 
-        /* ========== INPUT AREA ========== */
+        /* Input */
         .input-area {
             padding: 20px;
             background: var(--bg-primary);
         }
 
-        .input-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .input-container { max-width: 800px; margin: 0 auto; }
 
         .input-wrapper {
             display: flex;
@@ -354,9 +289,7 @@
             transition: border-color 0.2s;
         }
 
-        .input-wrapper:focus-within {
-            border-color: var(--text-muted);
-        }
+        .input-wrapper:focus-within { border-color: var(--text-muted); }
 
         .input-wrapper textarea {
             flex: 1;
@@ -372,9 +305,7 @@
             min-height: 24px;
         }
 
-        .input-wrapper textarea::placeholder {
-            color: var(--text-muted);
-        }
+        .input-wrapper textarea::placeholder { color: var(--text-muted); }
 
         .send-button {
             width: 36px;
@@ -387,23 +318,11 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            flex-shrink: 0;
         }
 
-        .send-button:hover:not(:disabled) {
-            background: var(--accent-hover);
-        }
-
-        .send-button:disabled {
-            background: var(--bg-hover);
-            cursor: not-allowed;
-        }
-
-        .send-button svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
+        .send-button:hover:not(:disabled) { background: var(--accent-hover); }
+        .send-button:disabled { background: var(--bg-hover); cursor: not-allowed; }
+        .send-button svg { width: 18px; height: 18px; fill: white; }
 
         .input-footer {
             text-align: center;
@@ -412,52 +331,27 @@
             color: var(--text-muted);
         }
 
-        /* ========== MOBILE ========== */
+        .error-msg {
+            background: #3d2020;
+            border: 1px solid #5c2c2c;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .error-msg a { color: var(--accent); }
+
         @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-
-            .suggestions {
-                grid-template-columns: 1fr;
-            }
-
-            .welcome-logo {
-                font-size: 3rem;
-            }
-
-            .welcome-title {
-                font-size: 22px;
-            }
-
-            .message {
-                padding: 16px 0;
-            }
-
-            .message-avatar {
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
-            }
+            .sidebar { display: none; }
+            .suggestions { grid-template-columns: 1fr; }
+            .welcome-logo { font-size: 3rem; }
+            .welcome-title { font-size: 22px; }
         }
 
-        /* ========== SCROLLBAR ========== */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
     </style>
 </head>
 <body>
@@ -471,48 +365,40 @@
         </button>
         
         <div class="sidebar-title">Recent</div>
-        
-        <div class="chat-history" id="chatHistory">
-            <div class="chat-item">What is quantum physics?</div>
-            <div class="chat-item">Explain black holes</div>
-            <div class="chat-item">How does AI work?</div>
-        </div>
+        <div class="chat-history" id="chatHistory"></div>
         
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-avatar">👤</div>
-                <span class="user-name">User</span>
+                <span style="font-size: 14px;">User</span>
             </div>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main class="main-content">
-        <!-- HEADER -->
         <div class="header">
-            <button class="model-selector">
+            <div class="model-name">
                 🧠 Neuraform
                 <span class="model-badge">AI</span>
-            </button>
+                <span class="status-dot connecting" id="statusDot"></span>
+            </div>
         </div>
 
-        <!-- CHAT AREA -->
         <div class="chat-area" id="chatArea">
-            <!-- Welcome Screen (shown when no messages) -->
             <div class="welcome-screen" id="welcomeScreen">
                 <div class="welcome-logo">🧠</div>
                 <h1 class="welcome-title">How can I help you today?</h1>
                 <p class="welcome-subtitle">
-                    I'm Neuraform, an AI assistant built from scratch. 
-                    Ask me about science, technology, history, and more.
+                    I'm Neuraform, an AI assistant built from scratch with PyTorch.
                 </p>
                 
                 <div class="suggestions">
-                    <div class="suggestion" onclick="askSuggestion('Explain quantum physics in simple terms')">
+                    <div class="suggestion" onclick="askSuggestion('Explain quantum physics')">
                         <div class="suggestion-title">🔬 Explain quantum physics</div>
                         <div class="suggestion-desc">in simple terms</div>
                     </div>
-                    <div class="suggestion" onclick="askSuggestion('What are black holes and how do they form')">
+                    <div class="suggestion" onclick="askSuggestion('What are black holes')">
                         <div class="suggestion-title">🕳️ What are black holes</div>
                         <div class="suggestion-desc">and how do they form</div>
                     </div>
@@ -520,19 +406,16 @@
                         <div class="suggestion-title">🤖 How does AI work</div>
                         <div class="suggestion-desc">explain machine learning</div>
                     </div>
-                    <div class="suggestion" onclick="askSuggestion('Tell me about the Big Bang theory')">
+                    <div class="suggestion" onclick="askSuggestion('Tell me about the Big Bang')">
                         <div class="suggestion-title">💥 The Big Bang theory</div>
                         <div class="suggestion-desc">origin of the universe</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Messages Container (hidden initially) -->
-            <div class="messages-container" id="messagesContainer" style="display: none;">
-            </div>
+            <div class="messages-container" id="messagesContainer" style="display: none;"></div>
         </div>
 
-        <!-- INPUT AREA -->
         <div class="input-area">
             <div class="input-container">
                 <div class="input-wrapper">
@@ -544,9 +427,7 @@
                         oninput="autoResize(this)"
                     ></textarea>
                     <button class="send-button" id="sendButton" onclick="sendMessage()">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                     </button>
                 </div>
                 <div class="input-footer">
@@ -561,18 +442,43 @@
         // CONFIGURATION
         // ═══════════════════════════════════════════════════════════════
         
-        const API_URL = 'https://magical-plus-neuraform.hf.space';
+        const SPACE_URL = 'https://magical-plus-neuraform.hf.space';
         
         // ═══════════════════════════════════════════════════════════════
 
-        const chatArea = document.getElementById('chatArea');
         const welcomeScreen = document.getElementById('welcomeScreen');
         const messagesContainer = document.getElementById('messagesContainer');
+        const chatArea = document.getElementById('chatArea');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
+        const statusDot = document.getElementById('statusDot');
+        const chatHistory = document.getElementById('chatHistory');
 
         let isGenerating = false;
-        let conversationHistory = [];
+        let client = null;
+        let chatHistoryList = [];
+
+        // Initialize Gradio Client
+        async function initClient() {
+            try {
+                statusDot.className = 'status-dot connecting';
+                
+                // Wait for Gradio client to load
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (window.GradioClient) {
+                    client = await window.GradioClient.connect(SPACE_URL);
+                    statusDot.className = 'status-dot online';
+                    console.log('✅ Connected to Neuraform!');
+                } else {
+                    throw new Error('Gradio client not loaded');
+                }
+            } catch (error) {
+                console.error('Connection error:', error);
+                statusDot.className = 'status-dot offline';
+                // We'll use fetch fallback
+            }
+        }
 
         // Auto-resize textarea
         function autoResize(textarea) {
@@ -588,9 +494,8 @@
             }
         }
 
-        // Start new chat
+        // New chat
         function newChat() {
-            conversationHistory = [];
             messagesContainer.innerHTML = '';
             messagesContainer.style.display = 'none';
             welcomeScreen.style.display = 'flex';
@@ -598,56 +503,68 @@
             userInput.focus();
         }
 
-        // Add message to UI
+        // Add message
         function addMessage(content, isUser = false) {
-            // Hide welcome screen, show messages
             welcomeScreen.style.display = 'none';
             messagesContainer.style.display = 'block';
 
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-            
-            messageDiv.innerHTML = `
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user' : 'bot'}`;
+            div.innerHTML = `
                 <div class="message-avatar">${isUser ? '👤' : '🧠'}</div>
-                <div class="message-content">
-                    <p>${content}</p>
-                </div>
+                <div class="message-content">${content}</div>
             `;
             
-            messagesContainer.appendChild(messageDiv);
+            messagesContainer.appendChild(div);
             chatArea.scrollTop = chatArea.scrollHeight;
-            
-            return messageDiv;
+
+            // Add to sidebar history
+            if (isUser && content.length > 0) {
+                addToChatHistory(content);
+            }
+
+            return div;
         }
 
-        // Show typing indicator
+        // Add to chat history sidebar
+        function addToChatHistory(text) {
+            const shortText = text.length > 30 ? text.substring(0, 30) + '...' : text;
+            
+            // Avoid duplicates
+            if (!chatHistoryList.includes(shortText)) {
+                chatHistoryList.unshift(shortText);
+                if (chatHistoryList.length > 10) chatHistoryList.pop();
+                
+                chatHistory.innerHTML = chatHistoryList.map(item => 
+                    `<div class="chat-item">${item}</div>`
+                ).join('');
+            }
+        }
+
+        // Show typing
         function showTyping() {
             welcomeScreen.style.display = 'none';
             messagesContainer.style.display = 'block';
 
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot';
-            typingDiv.id = 'typingIndicator';
-            
-            typingDiv.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'message bot';
+            div.id = 'typingIndicator';
+            div.innerHTML = `
                 <div class="message-avatar">🧠</div>
                 <div class="message-content">
                     <div class="typing-indicator">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span></span><span></span><span></span>
                     </div>
                 </div>
             `;
-            
-            messagesContainer.appendChild(typingDiv);
+            messagesContainer.appendChild(div);
             chatArea.scrollTop = chatArea.scrollHeight;
         }
 
-        // Remove typing indicator
+        // Remove typing
         function removeTyping() {
-            const typing = document.getElementById('typingIndicator');
-            if (typing) typing.remove();
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
         }
 
         // Send message
@@ -655,85 +572,139 @@
             const message = userInput.value.trim();
             if (!message || isGenerating) return;
 
-            // Update UI
             isGenerating = true;
             sendButton.disabled = true;
             userInput.value = '';
             userInput.style.height = 'auto';
 
-            // Add user message
             addMessage(message, true);
-            conversationHistory.push({ role: 'user', content: message });
-
-            // Show typing
             showTyping();
 
             try {
-                // Try different API endpoints
                 let response;
-                let result;
-                
-                // Try /run/predict first
-                try {
-                    response = await fetch(`${API_URL}/run/predict`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ data: [message, 0.8, 150] })
-                    });
-                    
-                    if (response.ok) {
-                        result = await response.json();
+
+                // Method 1: Try Gradio Client
+                if (client) {
+                    try {
+                        const result = await client.predict("/predict", {
+                            data: [message, 0.8, 150]
+                        });
+                        response = result.data[0];
+                    } catch (e) {
+                        console.log('Gradio client failed, trying fetch...');
                     }
-                } catch (e) {
-                    console.log('Trying alternative endpoint...');
                 }
 
-                // Try /api/predict if first failed
-                if (!result) {
+                // Method 2: Try fetch with /run/predict
+                if (!response) {
                     try {
-                        response = await fetch(`${API_URL}/api/predict`, {
+                        const res = await fetch(`${SPACE_URL}/run/predict`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ data: [message, 0.8, 150] })
                         });
                         
-                        if (response.ok) {
-                            result = await response.json();
+                        if (res.ok) {
+                            const data = await res.json();
+                            response = data.data?.[0];
                         }
                     } catch (e) {
-                        console.log('API predict also failed');
+                        console.log('/run/predict failed');
+                    }
+                }
+
+                // Method 3: Try /api/predict
+                if (!response) {
+                    try {
+                        const res = await fetch(`${SPACE_URL}/api/predict`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ data: [message, 0.8, 150] })
+                        });
+                        
+                        if (res.ok) {
+                            const data = await res.json();
+                            response = data.data?.[0];
+                        }
+                    } catch (e) {
+                        console.log('/api/predict failed');
+                    }
+                }
+
+                // Method 4: Try /call/predict (streaming)
+                if (!response) {
+                    try {
+                        const res = await fetch(`${SPACE_URL}/call/predict`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ data: [message, 0.8, 150] })
+                        });
+                        
+                        if (res.ok) {
+                            const data = await res.json();
+                            
+                            if (data.event_id) {
+                                // Get streaming result
+                                const eventRes = await fetch(`${SPACE_URL}/call/predict/${data.event_id}`);
+                                const eventText = await eventRes.text();
+                                
+                                const lines = eventText.split('\n');
+                                for (const line of lines) {
+                                    if (line.startsWith('data: ')) {
+                                        try {
+                                            const parsed = JSON.parse(line.slice(6));
+                                            if (parsed[0]) {
+                                                response = parsed[0];
+                                                break;
+                                            }
+                                        } catch (e) {}
+                                    }
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.log('/call/predict failed');
                     }
                 }
 
                 removeTyping();
 
-                if (result && result.data && result.data[0]) {
-                    const botResponse = result.data[0];
-                    addMessage(botResponse, false);
-                    conversationHistory.push({ role: 'assistant', content: botResponse });
+                if (response) {
+                    addMessage(response, false);
+                    statusDot.className = 'status-dot online';
                 } else {
-                    addMessage("I'm having trouble connecting. Please try again in a moment.", false);
+                    throw new Error('No response received');
                 }
 
             } catch (error) {
                 console.error('Error:', error);
                 removeTyping();
-                addMessage(`I couldn't connect to my brain. Please <a href="${API_URL}" target="_blank" style="color: var(--accent);">wake me up</a> first, then try again.`, false);
+                statusDot.className = 'status-dot offline';
+                
+                addMessage(`
+                    <div class="error-msg">
+                        <strong>⚠️ Connection Issue</strong><br><br>
+                        The AI might be sleeping. Please:<br>
+                        1. <a href="${SPACE_URL}" target="_blank">Click here to wake up the AI</a><br>
+                        2. Wait for it to load (about 1 minute)<br>
+                        3. Come back and try again
+                    </div>
+                `, false);
             }
 
-            // Reset UI
             isGenerating = false;
             sendButton.disabled = false;
             userInput.focus();
         }
 
-        // Handle suggestion clicks
+        // Suggestion click
         function askSuggestion(text) {
             userInput.value = text;
             sendMessage();
         }
 
-        // Focus input on load
+        // Initialize
+        initClient();
         userInput.focus();
     </script>
 </body>
