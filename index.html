@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 Neuraform AI</title>
+    <title>Neuraform AI</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -11,170 +14,727 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #212121;
+            --bg-secondary: #171717;
+            --bg-tertiary: #2f2f2f;
+            --bg-hover: #3a3a3a;
+            --text-primary: #ececec;
+            --text-secondary: #9a9a9a;
+            --text-muted: #6b6b6b;
+            --border-color: #3a3a3a;
+            --accent: #10a37f;
+            --accent-hover: #0d8a6c;
+            --user-bubble: #2f2f2f;
+            --bot-bubble: transparent;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
-            color: #fff;
-            padding: 20px;
+            display: flex;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
         }
 
-        header {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .logo {
-            font-size: 4rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 15px 0;
-            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            color: #888;
-            font-size: 1.1rem;
+        .new-chat-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
             margin-bottom: 15px;
         }
 
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
+        .new-chat-btn:hover {
+            background: var(--bg-hover);
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 10px 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background 0.2s;
+        }
+
+        .chat-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .user-info:hover {
+            background: var(--bg-hover);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: 100vh;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .model-selector:hover {
+            background: var(--bg-hover);
+        }
+
+        .model-badge {
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
             font-weight: 600;
         }
 
-        .ai-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            margin: 30px 0;
+        /* ========== CHAT AREA ========== */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
         }
 
-        .ai-container iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-        }
-
-        gradio-app {
-            display: block;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
             text-align: center;
+            padding: 40px;
         }
 
-        .feature-icon {
-            font-size: 2rem;
+        .welcome-logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 600;
             margin-bottom: 10px;
         }
 
-        .feature h3 {
-            color: #a855f7;
-            margin-bottom: 8px;
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 500px;
+            line-height: 1.6;
         }
 
-        .feature p {
-            color: #888;
-            font-size: 0.9rem;
+        .suggestions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 40px;
+            max-width: 600px;
+            width: 100%;
         }
 
-        footer {
+        .suggestion {
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion:hover {
+            background: var(--bg-hover);
+            border-color: var(--text-muted);
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ========== MESSAGES ========== */
+        .messages-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .message.bot .message-avatar {
+            background: var(--accent);
+        }
+
+        .message-content {
+            flex: 1;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .message-content p {
+            margin-bottom: 12px;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 10px 0;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* ========== INPUT AREA ========== */
+        .input-area {
+            padding: 20px;
+            background: var(--bg-primary);
+        }
+
+        .input-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 16px;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--text-muted);
+        }
+
+        .input-wrapper textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.5;
+            resize: none;
+            max-height: 200px;
+            min-height: 24px;
+        }
+
+        .input-wrapper textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-button:hover:not(:disabled) {
+            background: var(--accent-hover);
+        }
+
+        .send-button:disabled {
+            background: var(--bg-hover);
+            cursor: not-allowed;
+        }
+
+        .send-button svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .input-footer {
             text-align: center;
-            padding: 30px;
-            color: #555;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        footer a {
-            color: #6366f1;
-            text-decoration: none;
-        }
-
+        /* ========== MOBILE ========== */
         @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .logo { font-size: 3rem; }
-            .ai-container iframe { height: 400px; }
+            .sidebar {
+                display: none;
+            }
+
+            .suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-logo {
+                font-size: 3rem;
+            }
+
+            .welcome-title {
+                font-size: 22px;
+            }
+
+            .message {
+                padding: 16px 0;
+            }
+
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo">🧠</div>
-            <h1>NEURAFORM</h1>
-            <p class="tagline">AI Language Model • Built from Scratch with PyTorch</p>
-            <div class="badge">✨ Real Neural Network - Not Rule-Based!</div>
-        </header>
-
-        <!-- AI Interface -->
-        <div class="ai-container">
-            <iframe src="https://magical-plus-neuraform.hf.space"></iframe>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <button class="new-chat-btn" onclick="newChat()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+            </svg>
+            New chat
+        </button>
+        
+        <div class="sidebar-title">Recent</div>
+        
+        <div class="chat-history" id="chatHistory">
+            <div class="chat-item">What is quantum physics?</div>
+            <div class="chat-item">Explain black holes</div>
+            <div class="chat-item">How does AI work?</div>
         </div>
-
-        <!-- Features -->
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🧠</div>
-                <h3>Real AI</h3>
-                <p>Actual neural network with transformer architecture</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h3>2.7M Parameters</h3>
-                <p>Trained from scratch using PyTorch</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📚</div>
-                <h3>Multi-Topic</h3>
-                <p>Science, history, technology & more</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🌐</div>
-                <h3>Free & Open</h3>
-                <p>Hosted on Hugging Face Spaces</p>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <span class="user-name">User</span>
             </div>
         </div>
+    </aside>
 
-        <!-- Footer -->
-        <footer>
-            Built with ❤️ using PyTorch •
-            <a href="https://huggingface.co/spaces/Magical-plus/neuraform" target="_blank">View on Hugging Face</a> •
-            <a href="https://github.com" target="_blank">GitHub</a>
-        </footer>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- HEADER -->
+        <div class="header">
+            <button class="model-selector">
+                🧠 Neuraform
+                <span class="model-badge">AI</span>
+            </button>
+        </div>
+
+        <!-- CHAT AREA -->
+        <div class="chat-area" id="chatArea">
+            <!-- Welcome Screen (shown when no messages) -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-logo">🧠</div>
+                <h1 class="welcome-title">How can I help you today?</h1>
+                <p class="welcome-subtitle">
+                    I'm Neuraform, an AI assistant built from scratch. 
+                    Ask me about science, technology, history, and more.
+                </p>
+                
+                <div class="suggestions">
+                    <div class="suggestion" onclick="askSuggestion('Explain quantum physics in simple terms')">
+                        <div class="suggestion-title">🔬 Explain quantum physics</div>
+                        <div class="suggestion-desc">in simple terms</div>
+                    </div>
+                    <div class="suggestion" onclick="askSuggestion('What are black holes and how do they form')">
+                        <div class="suggestion-title">🕳️ What are black holes</div>
+                        <div class="suggestion-desc">and how do they form</div>
+                    </div>
+                    <div class="suggestion" onclick="askSuggestion('How does artificial intelligence work')">
+                        <div class="suggestion-title">🤖 How does AI work</div>
+                        <div class="suggestion-desc">explain machine learning</div>
+                    </div>
+                    <div class="suggestion" onclick="askSuggestion('Tell me about the Big Bang theory')">
+                        <div class="suggestion-title">💥 The Big Bang theory</div>
+                        <div class="suggestion-desc">origin of the universe</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Container (hidden initially) -->
+            <div class="messages-container" id="messagesContainer" style="display: none;">
+            </div>
+        </div>
+
+        <!-- INPUT AREA -->
+        <div class="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="userInput" 
+                        placeholder="Message Neuraform..."
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <button class="send-button" id="sendButton" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    Neuraform can make mistakes. Consider checking important information.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        
+        const API_URL = 'https://magical-plus-neuraform.hf.space';
+        
+        // ═══════════════════════════════════════════════════════════════
+
+        const chatArea = document.getElementById('chatArea');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+
+        let isGenerating = false;
+        let conversationHistory = [];
+
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+        }
+
+        // Handle Enter key
+        function handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Start new chat
+        function newChat() {
+            conversationHistory = [];
+            messagesContainer.innerHTML = '';
+            messagesContainer.style.display = 'none';
+            welcomeScreen.style.display = 'flex';
+            userInput.value = '';
+            userInput.focus();
+        }
+
+        // Add message to UI
+        function addMessage(content, isUser = false) {
+            // Hide welcome screen, show messages
+            welcomeScreen.style.display = 'none';
+            messagesContainer.style.display = 'block';
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '👤' : '🧠'}</div>
+                <div class="message-content">
+                    <p>${content}</p>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            
+            return messageDiv;
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            welcomeScreen.style.display = 'none';
+            messagesContainer.style.display = 'block';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🧠</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTyping() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+
+        // Send message
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message || isGenerating) return;
+
+            // Update UI
+            isGenerating = true;
+            sendButton.disabled = true;
+            userInput.value = '';
+            userInput.style.height = 'auto';
+
+            // Add user message
+            addMessage(message, true);
+            conversationHistory.push({ role: 'user', content: message });
+
+            // Show typing
+            showTyping();
+
+            try {
+                // Try different API endpoints
+                let response;
+                let result;
+                
+                // Try /run/predict first
+                try {
+                    response = await fetch(`${API_URL}/run/predict`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ data: [message, 0.8, 150] })
+                    });
+                    
+                    if (response.ok) {
+                        result = await response.json();
+                    }
+                } catch (e) {
+                    console.log('Trying alternative endpoint...');
+                }
+
+                // Try /api/predict if first failed
+                if (!result) {
+                    try {
+                        response = await fetch(`${API_URL}/api/predict`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ data: [message, 0.8, 150] })
+                        });
+                        
+                        if (response.ok) {
+                            result = await response.json();
+                        }
+                    } catch (e) {
+                        console.log('API predict also failed');
+                    }
+                }
+
+                removeTyping();
+
+                if (result && result.data && result.data[0]) {
+                    const botResponse = result.data[0];
+                    addMessage(botResponse, false);
+                    conversationHistory.push({ role: 'assistant', content: botResponse });
+                } else {
+                    addMessage("I'm having trouble connecting. Please try again in a moment.", false);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                removeTyping();
+                addMessage(`I couldn't connect to my brain. Please <a href="${API_URL}" target="_blank" style="color: var(--accent);">wake me up</a> first, then try again.`, false);
+            }
+
+            // Reset UI
+            isGenerating = false;
+            sendButton.disabled = false;
+            userInput.focus();
+        }
+
+        // Handle suggestion clicks
+        function askSuggestion(text) {
+            userInput.value = text;
+            sendMessage();
+        }
+
+        // Focus input on load
+        userInput.focus();
+    </script>
 </body>
 </html>
